@@ -7,8 +7,9 @@ import math
 from multiprocessing import Value
 from PIL import Image,ImageTk
 
-def button_about_click():
 
+def button_about_click():
+ 
   """
   This function is called when the button "about" is clicked.
   Shows a pop up window with information about the program.
@@ -27,7 +28,7 @@ def button_about_click():
       popup_window, text="Author : Florent BROTTEL-PATIENCE\n Tobias WENDL")
   popup_label_affiliation = tk.Label(popup_window,
                                      text="Affiliation : Polytech Dijon")
-  popup_label_date = tk.Label(popup_window, text="Date : 14-02-2024")
+  popup_label_date = tk.Label(popup_window, text="Date : 28-03-2024")
   popup_label_version = tk.Label(popup_window, text="Version : 1.0.2")
 
   popup_label_author.pack()
@@ -43,17 +44,18 @@ def draw_compass(canvas, angle):
     canvas.create_oval(50, 50, 250, 250, outline="black", width=2)
     
     # Dessiner les directions
-    directions = ["E", "N", "W", "S"]
+    directions = ["N", "E", "S", "W"]
     for i in range(4):
-        x = 150 + 90 * math.cos(math.radians(90*i))
-        y = 150 - 90 * math.sin(math.radians(90*i))
+        adjusted_direction_angle = (90 - 90*i)%360
+        x = 150 + 90 * math.cos(math.radians(adjusted_direction_angle))
+        y = 150 - 90 * math.sin(math.radians(adjusted_direction_angle))
         canvas.create_text(x, y, text=directions[i], font=("Helvetica", 16, "bold"))
 
-    adjusted_angle = (angle - 90)%360
+    adjusted_angle = (90 - angle)%360
     
     # Dessiner l'aiguille de la boussole
-    x2 = 150 + 90 * math.cos(math.radians(angle))
-    y2 = 150 - 90 * math.sin(math.radians(angle))
+    x2 = 150 + 90 * math.cos(math.radians(adjusted_angle))
+    y2 = 150 - 90 * math.sin(math.radians(adjusted_angle))
     canvas.create_line(150, 150, x2, y2, fill="red", width=3)
 
 # Fonction pour mettre à jour l'angle de la boussole
